@@ -7,17 +7,16 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build]
+          keys: [frontend-build-v1]
       - run:
           name: Build front-end
           command: |
             cd frontend
             npm i
             npm run build
-
       - save_cache:
           paths: [frontend/node_modules]
-          key: frontend-build
+          key: frontend-build-v1
 
   build-backend:
     docker:
@@ -25,7 +24,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build]
+          keys: [backend-build-v1]
       - run:
           name: Back-end build
           command: |
@@ -34,7 +33,7 @@ jobs:
             npm run build
       - save_cache:
           paths: [backend/node_modules]
-          key: backend-build
+          key: backend-build-v1
 
   test-frontend:
     docker:
@@ -42,7 +41,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build]
+          keys: [frontend-build-v1]
       - run:
           name: front-end test
           command: |
@@ -55,7 +54,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build]
+          keys: [backend-build-v1]
       - run:
           name: Back-end build
           command: |
@@ -68,7 +67,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build]
+          keys: [frontend-build-v1]
       - run:
           name: front-end scan
           command: |
@@ -81,7 +80,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build]
+          keys: [backend-build-v1]
       - run:
           name: Back-end scan
           command: |
