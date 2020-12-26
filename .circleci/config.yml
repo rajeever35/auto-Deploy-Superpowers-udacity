@@ -104,6 +104,16 @@ jobs:
               --stack-name "UdapeopleB" \
               --parameter-overrides ID="raj01" 
       - run:
+          name: Get and save public DNS of EC2 instance to https://memstash.io/
+          command: |
+            PUBLIC_DNS=$(aws ec2 describe-instances --region us-west-2 --filters 'Name=tag:project,Values=UdaPeople_B' --query "Reservations[*].Instances[0].PublicDnsName" --output text)
+            echo ${PUBLIC_DNS}
+            curl -H "Content-Type: text/plain" \
+               -H "token: raj01" \
+               --request PUT \
+               --data ${PUBLIC_DNS} \
+               https://api.memstash.io/values/public_dns
+      - run:
           name: Ensure front-end infrastructure exist
           command: |
             aws cloudformation deploy \
