@@ -1,7 +1,7 @@
 version: 2.1
 
 commands:
-  destroy-aws-resource:
+  destroy:
     description: Destroy all cloudformation stacks with a given workflow ID.
     steps:
       - run:
@@ -171,6 +171,7 @@ jobs:
               --tags project=Udapeople_F \
               --stack-name "Udapeople-raj01" \
               --parameter-overrides ID="raj01"  
+      - destroy
 
   deploy-backend:
     docker:
@@ -202,6 +203,8 @@ jobs:
             printenv >> ./backend/.env
             cd .circleci/ansible/
             ansible-playbook -i ./inventory deploy-backend.yml
+      - revert-migration
+      - destroy
 
   deploy-frontend:
     docker:
@@ -229,7 +232,7 @@ jobs:
           name: Copy built frontend files to the S3 bucket
           command: |
             aws s3 cp ./frontend/dist s3://udapeople-raj01/ --recursive
-
+      - destroy
 
 
 workflows:
