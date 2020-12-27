@@ -121,15 +121,6 @@ jobs:
               --tags project=Udapeople_F \
               --stack-name "Udapeople-raj01" \
               --parameter-overrides ID="raj01"  
-        
-      - add_ssh_keys:
-          fingerprints: ["a6:fb:ab:d4:9b:93:ed:e8:7b:6e:97:e9:57:89:c7:b4"]
-
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/.circleci/ansible/inventory.txt
-
 
 
 workflows:
