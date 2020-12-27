@@ -178,7 +178,7 @@ jobs:
       - run: 
           name: Copy built frontend files to the S3 bucket
           command: |
-            aws s3 cp ./frontend/dist s3://udapeople-${ID}/ --recursive
+            aws s3 cp ./frontend/dist s3://udapeople-raj01/ --recursive
 
 
 
