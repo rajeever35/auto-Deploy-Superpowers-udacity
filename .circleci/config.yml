@@ -1,5 +1,55 @@
 version: 2.1
 
+commands:
+  destroy-aws-resource:
+    description: Destroy all cloudformation stacks with a given workflow ID.
+    steps:
+      - run:
+          name: Delete all files from the S3 bucket created
+          command: |
+            if aws s3api head-bucket --bucket udapeople-raj01
+            then
+              aws s3 rm s3://udapeople-raj01/ --recursive
+            fi
+          when: on_fail
+      - run:
+          name: Delete the AWS CloudFormation stacks
+          command: |
+            if aws cloudformation wait stack-exists --stack-name Udapeople-raj01
+            then 
+              aws cloudformation delete-stack --stack-name Udapeople-raj01
+            fi
+            if aws cloudformation wait stack-exists --stack-name UdapeopleB
+            then
+              aws cloudformation delete-stack --stack-name UdapeopleB
+            fi
+          when: on_fail
+
+  revert-migration:
+    description: Revert the latest migration
+    steps:
+      - run:
+          name: Get the public DNS of EC2 instance from https://memstash.io/
+          command: |
+            PUBLIC_DNS=$(curl -H "token: raj01" --request GET https://api.memstash.io/values/public_dns)
+            echo ${PUBLIC_DNS}
+            cd .circleci/ansible/
+            echo "[all]" > ./inventory
+            echo ${PUBLIC_DNS} >> ./inventory
+            cat ./inventory
+          when: on_fail
+      - add_ssh_keys:
+          fingerprints: ["a6:fb:ab:d4:9b:93:ed:e8:7b:6e:97:e9:57:89:c7:b4"]
+      - run:
+          name: Revert the last migration
+          command: |
+            printenv >> ./backend/.env
+            cd .circleci/ansible/
+            ansible-playbook -i ./inventory db_rollback.yml
+          when: on_fail
+
+
+
 jobs:
   build-frontend:
     docker:
