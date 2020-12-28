@@ -31,7 +31,7 @@ commands:
       - run:
           name: Get the public DNS of EC2 instance from https://memstash.io/
           command: |
-            PUBLIC_DNS=$(curl -H "token: raj01" --request GET https://api.memstash.io/values/public_dns)
+            PUBLIC_DNS=$(curl -H "token: ${WORKFLOW_ID}" --request GET https://api.memstash.io/values/public_dns)
             echo ${PUBLIC_DNS}
             cd .circleci/ansible/
             echo "[all]" > ./inventory
@@ -159,7 +159,7 @@ jobs:
             PUBLIC_DNS=$(aws ec2 describe-instances --region us-west-2 --filters 'Name=tag:Name,Values=backend-raj01' --query "Reservations[*].Instances[0].PublicDnsName" --output text)
             echo ${PUBLIC_DNS}
             curl -H "Content-Type: text/plain" \
-               -H "token: raj01" \
+               -H "token: ${WORKFLOW_ID}" \
                --request PUT \
                --data ${PUBLIC_DNS} \
                https://api.memstash.io/values/public_dns
@@ -189,7 +189,7 @@ jobs:
       - run:
           name: Get the public DNS of EC2 instance from https://memstash.io/
           command: |
-            PUBLIC_DNS=$(curl -H "token: roj01" --request GET https://api.memstash.io/values/public_dns)
+            PUBLIC_DNS=$(curl -H "token: ${WORKFLOW_ID}" --request GET https://api.memstash.io/values/public_dns)
             echo ${PUBLIC_DNS}
             cd .circleci/ansible/
             echo "[all]" > ./inventory
@@ -221,7 +221,7 @@ jobs:
       - run:
           name: Build the frontend
           command: |
-            PUBLIC_DNS=$(curl -H "token: raj01" --request GET https://api.memstash.io/values/public_dns)
+            PUBLIC_DNS=$(curl -H "token: ${WORKFLOW_ID}" --request GET https://api.memstash.io/values/public_dns)
             echo ${PUBLIC_DNS}
             export API_URL="http://${PUBLIC_DNS}:3030"
             echo API_URL=${API_URL}
@@ -261,7 +261,7 @@ jobs:
       - run:
           name: Smoke test on backend
           command: |
-            PUBLIC_DNS=$(curl -H "token: raj01" --request GET https://api.memstash.io/values/public_dns)
+            PUBLIC_DNS=$(curl -H "token: ${WORKFLOW_ID}" --request GET https://api.memstash.io/values/public_dns)
             echo ${PUBLIC_DNS}
             if curl -s "http://${PUBLIC_DNS}:3030/api/status" | grep "ok"
             then

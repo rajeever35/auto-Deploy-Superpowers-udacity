@@ -8,6 +8,7 @@
     host_key_checking: False
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
     # Get the environment variables from CircleCI and add to the instance
+    WORKFLOW_ID: "{{ lookup('env','WORKFLOW_ID') }}"
     TYPEORM_MIGRATIONS: "{{ lookup('env','TYPEORM_MIGRATIONS') }}"
     TYPEORM_ENTITIES: "{{ lookup('env','TYPEORM_ENTITIES') }}"
     TYPEORM_CONNECTION: "{{ lookup('env','TYPEORM_CONNECTION') }}"
