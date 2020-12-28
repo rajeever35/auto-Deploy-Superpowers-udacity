@@ -288,12 +288,12 @@ workflows:
           requires: [build-frontend]
       - deploy-infrastructure:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #- deploy-backend:
-          #requires: [deploy-infrastructure]
-      #- deploy-frontend:
-          #requires: [deploy-backend]
-      #- smoke-test:
-          #requires: [deploy-frontend]
+      - deploy-backend:
+          requires: [deploy-infrastructure]
+      - deploy-frontend:
+          requires: [deploy-backend]
+      - smoke-test:
+          requires: [deploy-frontend]
 
 
 
