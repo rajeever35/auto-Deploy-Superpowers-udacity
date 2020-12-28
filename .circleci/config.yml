@@ -265,12 +265,27 @@ jobs:
             echo ${PUBLIC_DNS}
             if curl -s "http://${PUBLIC_DNS}:3030/api/status" | grep "ok"
             then
-              return 0
-            else
               return 1
+            else
+              return 0
             fi
       - revert-migration
-      #- destroy
+      - destroy
+
+  cloudfront-update:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            # your code here
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            # your code here
+
 
 
 workflows:
