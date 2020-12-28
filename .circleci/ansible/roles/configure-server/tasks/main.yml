@@ -3,7 +3,7 @@
     curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
     sudo apt -y upgrade
     sudo apt install -y nodejs
-    
+
 - name: "install pm2 by npm"
   become: true
   npm:
@@ -15,7 +15,7 @@
 - name: "copy files from CircleCI to server"
   copy:
     src: /root/project/backend
-    dest: /home/ubuntu
+    dest: /home/ubuntu/
 
 - name: "install package dependencies"
   shell: |
