@@ -284,7 +284,7 @@ jobs:
               --stack-name udapeople-cloudfront \
               --template-file .circleci/files/cloudfront.yml \
               --region ${AWS_DEFAULT_REGION} \
-              --parameter-overrides ID="${WORKFLOW_ID}"
+              --parameter-overrides WorkflowID="${WorkflowID}"
       - destroy
   cleanup:
     docker:
