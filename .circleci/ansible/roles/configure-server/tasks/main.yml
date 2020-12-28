@@ -16,7 +16,7 @@
   copy:
     src: /root/project/backend
     dest: /home/ubuntu/
-    no_output_timeout: 20m
+  no_output_timeout: 60m
 
 - name: "install package dependencies"
   shell: |
