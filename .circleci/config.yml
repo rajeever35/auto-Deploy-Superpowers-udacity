@@ -280,11 +280,43 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            # your code here
+            apk add --no-cache --upgrade bash
+            apk add --no-cache --update npm
+
       - run:
           name: Update cloudfront distribution
           command: |
-            # your code here
+            aws cloudformation deploy \
+              --stack-name udapeople-cloudfront \
+              --template-file .circleci/files/cloudfront.yml \
+              --region ${AWS_DEFAULT_REGION} \
+              --parameter-overrides ID="${WORKFLOW_ID}"
+      - destroy
+cleanup:
+  docker:
+    - image: amazon/aws-cli
+  steps:
+    - checkout
+    - run:
+        name: Get old stack workflow id
+        command: |
+            OLD_WORKFLOW_ID=$(aws cloudformation list-exports --query "Exports[?Name=='CircleCI-WorkflowID'].Value" --output text)
+            echo OLD_WORKFLOW_ID=${OLD_WORKFLOW_ID}
+            STACKS=$(aws cloudformation list-stacks --query "StackSummaries[*].StackName" --stack-status-filter UPDATE_COMPLETE CREATE_COMPLETE --output text)
+            echo STACKS=${STACKS}
+    - run:
+        name: Remove old stacks and files
+        command: |
+          if [ -n "${OLD_WORKFLOW_ID}" ] && [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+          then
+              echo deleting all files at S3 bucket udapeople-${OLD_WORKFLOW_ID}
+              aws s3 rm s3://udapeople-${OLD_WORKFLOW_ID}/ --recursive
+              echo deleting stack Udapeople-raj01
+              aws cloudformation delete-stack --stack-name Udapeople-raj01
+              echo deleting stack UdapeopleB
+              aws cloudformation delete-stack --stack-name UdapeopleB
+            fi
+      - destroy
 
 
 
@@ -309,6 +341,10 @@ workflows:
           requires: [deploy-backend]
       - smoke-test:
           requires: [deploy-frontend]
+      - cloudfront-update:
+          requires: [smoke-test]
+      - cleanup:
+          requires: [cloudfront-update]
 
 
 
