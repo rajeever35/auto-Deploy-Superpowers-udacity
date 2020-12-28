@@ -270,7 +270,7 @@ jobs:
               return 1
             fi
       - revert-migration
-      - destroy
+      #- destroy
 
 
 workflows:
