@@ -159,7 +159,7 @@ jobs:
             PUBLIC_DNS=$(aws ec2 describe-instances --region us-west-2 --filters 'Name=tag:Name,Values=backend-raj01' --query "Reservations[*].Instances[0].PublicDnsName" --output text)
             echo ${PUBLIC_DNS}
             curl -H "Content-Type: text/plain" \
-               -H "token: 13ce5142-be03-423d-911c-1eadca1ff17b" \
+               -H "token: raj01" \
                --request PUT \
                --data ${PUBLIC_DNS} \
                https://api.memstash.io/values/public_dns
