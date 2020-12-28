@@ -293,7 +293,7 @@ workflows:
       - deploy-frontend:
           requires: [deploy-backend]
       - smoke-test:
-          requires: [destroy-frontend]
+          requires: [deploy-frontend]
 
 
 
