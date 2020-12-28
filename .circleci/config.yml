@@ -162,7 +162,7 @@ jobs:
                -H "token: raj01" \
                --request PUT \
                --data ${PUBLIC_DNS} \
-               https://api.memstash.io/values/PUBLIC_DNS
+               https://api.memstash.io/values/public_dns
       - run:
           name: Ensure front-end infrastructure exist
           command: |
