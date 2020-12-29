@@ -1,0 +1,14 @@
+URL01 :- Public Url to GitHub repository
+> https://github.com/rajeever35/auto-Deploy-Superpowers-udacity
+
+URL02 :- Public URL for the S3 Bucket
+> https://udapeople-raj01.s3-us-west-2.amazonaws.com/index.html
+
+URL03 :- Public URL for the CloudFront distribution
+> d1ggc4rmhpsdwr.cloudfront.net
+
+URL04 :- Public URLs to deployed application back-end in EC2
+> https://ec2-34-219-139-12.us-west-2.compute.amazonaws.com:3030/
+
+URL05 :- Public URL to your Prometheus Server
+> http://52.12.142.158:9090/targets
