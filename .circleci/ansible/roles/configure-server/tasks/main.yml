@@ -14,9 +14,9 @@
 
 - name: "copy files from CircleCI to server"
   copy:
-    src: /root/project/
+    src: /root/project/backend
     dest: /home/ubuntu/
-    force: yes
+    force: no
 
 
 - name: "install package dependencies"
