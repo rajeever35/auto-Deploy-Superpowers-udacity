@@ -156,7 +156,7 @@ jobs:
       - run:
           name: Get and save public DNS of EC2 instance to https://memstash.io/
           command: |
-            PUBLIC_DNS=$(aws ec2 describe-instances --region us-west-2 --filters 'Name=tag:Name,Values=backend-raj01' --query "Reservations[*].Instances[0].PublicDnsName" --output text)
+            PUBLIC_DNS=$(aws ec2 describe-instances --region us-east-1 --filters 'Name=tag:Name,Values=backend-raj01' --query "Reservations[*].Instances[0].PublicDnsName" --output text)
             echo ${PUBLIC_DNS}
             curl -H "Content-Type: text/plain" \
                -H "token: raj01" \
