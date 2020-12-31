@@ -39,7 +39,7 @@ commands:
             cat ./inventory
           when: on_fail
       - add_ssh_keys:
-          fingerprints: ["ce:34:0f:a8:11:08:da:51:2a:da:ce:0d:4f:dc:4e:a6"]
+          fingerprints: ["33:c8:64:fb:aa:80:1b:63:c6:98:30:9a:c8:8c:9a:14"]
       - run:
           name: Revert the last migration
           command: |
@@ -196,7 +196,7 @@ jobs:
             echo ${PUBLIC_DNS} >> ./inventory
             cat ./inventory
       - add_ssh_keys:
-          fingerprints: ["ce:34:0f:a8:11:08:da:51:2a:da:ce:0d:4f:dc:4e:a6"]  
+          fingerprints: ["33:c8:64:fb:aa:80:1b:63:c6:98:30:9a:c8:8c:9a:14"]  
       - run:
           name: Configure server
           command: |
