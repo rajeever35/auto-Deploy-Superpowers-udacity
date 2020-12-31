@@ -265,9 +265,9 @@ jobs:
             echo ${PUBLIC_DNS}
             if curl -s "http://${PUBLIC_DNS}:3030/api/status" | grep "ok"
             then
-              return 1
-            else
               return 0
+            else
+              return 1
             fi
       - revert-migration
       - destroy
