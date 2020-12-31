@@ -200,7 +200,7 @@ jobs:
       - run:
           name: Configure server
           command: |
-            printenv >> ./backend/.env
+            printenv > ./backend/.env
             cd .circleci/ansible/
             ansible-playbook -i ./inventory deploy-backend.yml
       - revert-migration
