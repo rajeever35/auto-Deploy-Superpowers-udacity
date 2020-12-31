@@ -14,8 +14,10 @@
 
 - name: "copy files from CircleCI to server"
   copy:
-    src: /root/project/backend/
+    src: /root/project/
     dest: /home/ubuntu/
+
+
 
 - name: "install package dependencies"
   shell: |
