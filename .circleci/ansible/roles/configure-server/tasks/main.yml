@@ -16,7 +16,7 @@
   copy:
     src: /root/project/
     dest: /home/ubuntu/
-
+    force: yes
 
 
 - name: "install package dependencies"
