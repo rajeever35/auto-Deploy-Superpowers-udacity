@@ -203,8 +203,8 @@ jobs:
             printenv > ./backend/.env
             cd .circleci/ansible/
             ansible-playbook -i ./inventory deploy-backend.yml
-      - revert-migration
-      - destroy
+      #- revert-migration
+      #- destroy
 
   deploy-frontend:
     docker:
