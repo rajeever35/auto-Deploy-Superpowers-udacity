@@ -57,7 +57,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build-v1]
+          keys: [frontend-build-v2]
       - run:
           name: Build front-end
           command: |
@@ -67,7 +67,7 @@ jobs:
             npm audit fix --audit-level=critical --force
       - save_cache:
           paths: [frontend/node_modules]
-          key: frontend-build-v1
+          key: frontend-build-v2
 
   build-backend:
     docker:
@@ -75,7 +75,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build-v1]
+          keys: [backend-build-v2]
       - run:
           name: Back-end build
           command: |
@@ -85,7 +85,7 @@ jobs:
             npm audit fix --audit-level=critical --force
       - save_cache:
           paths: [backend/node_modules]
-          key: backend-build-v1
+          key: backend-build-v2
 
   test-frontend:
     docker:
@@ -93,7 +93,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build-v1]
+          keys: [frontend-build-v2]
       - run:
           name: front-end test
           command: |
@@ -107,7 +107,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build-v1]
+          keys: [backend-build-v2]
       - run:
           name: Back-end build
           command: |
@@ -121,7 +121,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build-v1]
+          keys: [frontend-build-v2]
       - run:
           name: front-end scan
           command: |
@@ -135,7 +135,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build-v1]
+          keys: [backend-build-v2]
       - run:
           name: Back-end scan
           command: |
