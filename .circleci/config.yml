@@ -57,16 +57,18 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build-v1]
+          keys: [frontend-build-v3]
       - run:
           name: Build front-end
           command: |
             cd frontend
             npm i
+            npm update
             npm run build
+            npm audit fix --force
       - save_cache:
           paths: [frontend/node_modules]
-          key: frontend-build-v1
+          key: frontend-build-v3
 
   build-backend:
     docker:
@@ -74,16 +76,17 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build-v1]
+          keys: [backend-build-v3]
       - run:
           name: Back-end build
           command: |
             cd backend
             npm i
             npm run build
+            npm audit fix --force
       - save_cache:
           paths: [backend/node_modules]
-          key: backend-build-v1
+          key: backend-build-v3
 
   test-frontend:
     docker:
@@ -91,7 +94,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build-v1]
+          keys: [frontend-build-v3]
       - run:
           name: front-end test
           command: |
@@ -105,7 +108,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build-v1]
+          keys: [backend-build-v3]
       - run:
           name: Back-end build
           command: |
@@ -118,13 +121,13 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build-v1]
+          keys: [frontend-build-v3]
       - run:
           name: front-end scan
           command: |
             cd frontend
             npm i
-            npm audit --audit-level=critical
+            npm audit fix --force
 
   scan-backend:
     docker:
@@ -132,13 +135,13 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build-v1]
+          keys: [backend-build-v3]
       - run:
           name: Back-end scan
           command: |
             cd backend
-            npm audit fix --audit-level=critical --force
-
+            npm i
+            npm audit fix --force
 
   deploy-infrastructure:
     docker:
