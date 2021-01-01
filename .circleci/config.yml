@@ -99,7 +99,8 @@ jobs:
           command: |
             cd backend
             npm i
-            npm run testnpm audit fix --force
+            npm run test
+            npm audit fix --force
 
   test-backend:
     docker:
