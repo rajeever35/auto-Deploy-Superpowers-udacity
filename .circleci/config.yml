@@ -63,6 +63,7 @@ jobs:
           command: |
             cd frontend
             npm i
+            npm update
             npm run build
             npm audit fix --force
       - save_cache:
