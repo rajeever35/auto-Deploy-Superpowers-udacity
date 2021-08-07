@@ -48,8 +48,6 @@ commands:
             ansible-playbook -i ./inventory db_rollback.yml
           when: on_fail
 
-
-
 jobs:
   build-frontend:
     docker:
@@ -128,7 +126,7 @@ jobs:
           command: |
             cd frontend
             npm i
-            npm audit fix --audit-level=critical --force
+            npm audit fix --force
 
   scan-backend:
     docker:
@@ -141,8 +139,7 @@ jobs:
           name: Back-end scan
           command: |
             cd backend
-            npm audit fix --audit-level=critical --force
-
+            npm audit fix --force
 
   deploy-infrastructure:
     docker:
@@ -156,7 +153,7 @@ jobs:
               --template-file .circleci/files/backend.yml \
               --tags project=Udapeople_B \
               --stack-name "UdapeopleB" \
-              --parameter-overrides ID="raj01" 
+              --parameter-overrides ID="raj01"
       - run:
           name: Get and save public DNS of EC2 instance to https://memstash.io/
           command: |
@@ -174,7 +171,7 @@ jobs:
               --template-file .circleci/files/frontend.yml \
               --tags project=Udapeople_F \
               --stack-name "Udapeople-raj01" \
-              --parameter-overrides ID="raj01"  
+              --parameter-overrides ID="raj01"
       - destroy
 
   deploy-backend:
@@ -200,7 +197,7 @@ jobs:
             echo ${PUBLIC_DNS} >> ./inventory
             cat ./inventory
       - add_ssh_keys:
-          fingerprints: ["33:c8:64:fb:aa:80:1b:63:c6:98:30:9a:c8:8c:9a:14"]  
+          fingerprints: ["33:c8:64:fb:aa:80:1b:63:c6:98:30:9a:c8:8c:9a:14"]
       - run:
           name: Configure server
           command: |
@@ -232,12 +229,11 @@ jobs:
             cd frontend
             npm install
             npm run build
-      - run: 
+      - run:
           name: Copy built frontend files to the S3 bucket
           command: |
             aws s3 cp ./frontend/dist s3://udapeople-raj01/ --recursive
       - destroy
-
 
   smoke-test:
     docker:
@@ -314,8 +310,6 @@ jobs:
               fi
       - destroy
 
-
-
 workflows:
   default:
     jobs:
@@ -359,6 +353,3 @@ workflows:
           filters:
             branches:
               only: main
-
-
-
